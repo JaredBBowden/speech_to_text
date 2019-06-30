@@ -3,7 +3,7 @@ import sys
 sys.path.insert(0, '../speech_recognition/')
 import speech_recognition as sr
 from os import path
-
+import datetime
 
 ######################################################
 # From microphone
@@ -25,15 +25,22 @@ except sr.RequestError as e:
 ######################################################
 # From file
 ######################################################
+
 r = sr.Recognizer()
 with sr.Microphone() as source:
     print("Say something!")
-    audio = r.record(source, duration=60)
 
-with open("test_sound_file3.wav", "wb") as f:
+    # TODO Find a more dynamic recording method
+    audio = r.record(source, duration=5)
+
+# Build the filename
+file_name = "./data/" + str(datetime.datetime.now()) + ".wav"
+
+# Title with datetime
+with open(file_name, "wb") as f:
     f.write(audio.get_wav_data())
 
-AUDIO_FILE = "./test_sound_file.wav"
+AUDIO_FILE = file_name
 
 # use the audio file as the audio source
 r = sr.Recognizer()
@@ -44,6 +51,8 @@ with sr.AudioFile(AUDIO_FILE) as source:
 try:
     print("Sphinx thinks you said " + r.recognize_sphinx(audio))
     the_text = r.recognize_sphinx(audio)
+    
+    # Add an extra line to parse timestamps
     the_time = r.recognize_sphinx(audio, show_all=True)
 except sr.UnknownValueError:
     print("Sphinx could not understand audio")
