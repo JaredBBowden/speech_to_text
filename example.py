@@ -1,5 +1,4 @@
 import sys
-#sys.path.insert(0, '/Users/Jared/Documents/speech_recognition/')
 sys.path.insert(0, '../speech_recognition/')
 import speech_recognition as sr
 from os import path
@@ -25,7 +24,6 @@ except sr.RequestError as e:
 ######################################################
 # From file
 ######################################################
-
 r = sr.Recognizer()
 with sr.Microphone() as source:
     print("Say something!")
