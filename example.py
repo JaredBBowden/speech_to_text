@@ -2,7 +2,7 @@ import sys
 sys.path.insert(0, '../speech_recognition/')
 import speech_recognition as sr
 from os import path
-import datetime
+import record_helpers as rh
 
 ######################################################
 # From microphone
@@ -32,7 +32,7 @@ with sr.Microphone() as source:
     audio = r.record(source, duration=5)
 
 # Build the filename
-file_name = "./data/" + str(datetime.datetime.now()) + ".wav"
+file_name = rh.create_wav_file_name()
 
 # Title with datetime
 with open(file_name, "wb") as f:
@@ -49,7 +49,7 @@ with sr.AudioFile(AUDIO_FILE) as source:
 try:
     print("Sphinx thinks you said " + r.recognize_sphinx(audio))
     the_text = r.recognize_sphinx(audio)
-    
+
     # Add an extra line to parse timestamps
     the_time = r.recognize_sphinx(audio, show_all=True)
 except sr.UnknownValueError:
