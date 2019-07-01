@@ -1,4 +1,4 @@
-# Text to speech  
+# Speech to text  
 
 Some simple experiments to parse text from speech. Emphasis on libraries that allow us perform this operation _offline_.
 
